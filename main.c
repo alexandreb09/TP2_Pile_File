@@ -1,5 +1,6 @@
 #include "Pile.h"
 #include "File.h"
+#include "Erreur.h"
 #include <stdio.h>
 #include <stdlib.h>                                    //fonction atoi
 
@@ -10,18 +11,21 @@ int main (int argc, char * argv[]){
      pile_t            * maPile;
 
      if (argc < 3)
-          printf("Veuillez saisir 2 arguments : la taille de la pile et le nombre d'éléments\n");
+          AfficheErreur(0);
      else {
           taille = atoi(argv[1]);
           nbElem = atoi(argv[2]);
      }
-     printf("taille : %d\n",taille);
+
      maPile = genererPile(taille,nbElem);
-     afficheP(maPile);
+     if (maPile){
+          afficheP(maPile);
 
-     maPile = inversion(maPile,&codeErreur);
-
-     afficheP(maPile);
+          maPile = inversion(maPile,&codeErreur);
+          if (codeErreur == 2)     AfficheErreur(codeErreur);
+          afficheP(maPile);
+     }
+     else AfficheErreur(1);
      libererP(maPile);
 
 }
