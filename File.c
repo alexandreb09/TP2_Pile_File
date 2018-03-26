@@ -34,7 +34,7 @@
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 int estVideF(file_t * file){
-     return (file->nbElem==0);
+     return (file->nbElem==0);											// Indique si la pile est vide
 }
 
 
@@ -52,10 +52,10 @@ int estVideF(file_t * file){
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 void ajouterF(file_t * file, element val){
-     int indice = (file->fin+1) % file->taille;
-     file->fin = indice;
-     file->nbElem++;
-     (file->base)[indice] = val;
+     int indice = (file->fin+1) % file->taille;							// Indice correspondant à la case où l'élément va être ajouté
+     file->fin = indice;												// Actualisation de l'indice de fin de la file
+     file->nbElem++;													// MAJ du nombre d'éléments
+     (file->base)[indice] = val;										// Ajout de l'élément
 }
 
 
@@ -70,7 +70,7 @@ void ajouterF(file_t * file, element val){
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 element sommetF(file_t * file){
-     return (file->base)[file->deb];
+     return (file->base)[file->deb];									// L'élément aus sommet de la pile
 }
 
 
@@ -87,11 +87,11 @@ element sommetF(file_t * file){
 void afficherF(file_t * file){
      int i = 0;
      printf("File :\n\t- Nombre d'éléments :%d\n\t- Nombre de cases libres : %d\n\t- File :\n",file->nbElem,file->taille-file->nbElem);
-     if (file){
-          for (i; i < file->nbElem; i++)
-               printf("\t\t|| %0.2f ||\n", (file->base)[(file->deb+i)%file->taille]);
+     if (file){															// Si la pile est non vide 
+          for (i; i < file->nbElem; i++)								// Pour chaque élément de la pile
+               printf("\t\t|| %0.2f ||\n", (file->base)[(file->deb+i)%file->taille]);		// Affichage de l'élément
      }
-     else printf("La file est vide\n");
+     else printf("La file est vide\n");									// Sinon : affichage "pile vide"
 }
 
 
@@ -139,9 +139,9 @@ file_t * initFile(int taille){
      Sous fonctions : sommetF                                             */
 /* -----------------------------------------------------------------------*/
 element supprimerF(file_t * file){
-	element ret = sommetF(file);
-	file->deb = (file->deb + 1) % file->taille;
-     file->nbElem--;
+	element ret = sommetF(file);										// Initialisation de l'élement à retourner
+	file->deb = (file->deb + 1) % file->taille;							// MAJ de l'indice de début
+    file->nbElem--;														// MAJ du nombre d'éléments
 	return ret;
 }
 
@@ -157,7 +157,8 @@ element supprimerF(file_t * file){
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 void libererF(file_t * file){
-     if (file)
-          free(file->base);
-     free(file);
+     if (file)															// Si la pile est non vide
+          free(file->base);												// Libération du tableau contenant les éléments de la pile
+     free(file);														// Libération de la structure pile
+     
 }

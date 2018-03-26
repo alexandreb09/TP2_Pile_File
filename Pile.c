@@ -91,8 +91,8 @@ int estVideP(pile_t * pile){
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 void empiler (pile_t * pile, element valeur){
-     pile->indice += 1;
-     (pile->base)[pile->indice] = valeur;
+     pile->indice += 1;													// MAJ de l'indice
+     (pile->base)[pile->indice] = valeur;								// Ajout de la valeur
 
      /* int codeErreur = 1;                                         // Code erreur
      if (pile->indice < pile->taille){
@@ -119,9 +119,9 @@ void empiler (pile_t * pile, element valeur){
      Sous foctions : -                                                    */
 /* -----------------------------------------------------------------------*/
 element depiler (pile_t * pile){                                 // Test effectué en amont
-     element                       valSommet = (pile->base)[pile->indice];
-     pile->indice -= 1;
-     return valSommet;
+     element                       valSommet = (pile->base)[pile->indice];  // Initialisation de l'élément à retourner
+     pile->indice -= 1;														// MAJ de l'indice
+     return valSommet;														// Renvoie de la valeur au sommet
 }
 
 
@@ -137,7 +137,7 @@ element depiler (pile_t * pile){                                 // Test effectu
      Variable locales : -                                                 */
 /* -----------------------------------------------------------------------*/
 element sommetP(pile_t * pile){
-     return (pile->base)[pile->indice];
+     return (pile->base)[pile->indice];									// Retour de l'élément au sommet de la pile
 }
 
 
@@ -156,8 +156,8 @@ element sommetP(pile_t * pile){
 void afficheP(pile_t * pile){
      int                           i;
      printf("PILE :\n\t- Nombre d'éléments : %d\n\t- Nombre cases libres : %d\n\t- Pile :\n",pile->indice+1,pile->taille-pile->indice-1);
-     for (i = pile->indice; i>=0; --i)
-          printf("\t\t|| %0.2f ||\n\t\t---------\n",(pile->base)[i]);
+     for (i = pile->indice; i>=0; --i)									// Pour chaque élément de la pile
+          printf("\t\t|| %0.2f ||\n\t\t---------\n",(pile->base)[i]);	// Affichage de l'élément
 }
 
 
@@ -172,8 +172,8 @@ void afficheP(pile_t * pile){
      Sous fonctions : -                                                   */
 /* -----------------------------------------------------------------------*/
 void libererP(pile_t * pile){
-     free(pile->base);
-     free(pile);
+     free(pile->base);													// Libération de la structure pile
+     free(pile);														// Libération de la pile
 }
 
 
@@ -195,21 +195,23 @@ void libererP(pile_t * pile){
                       - empiler                                           */
 /* -----------------------------------------------------------------------*/
 pile_t * inversion(pile_t * pile, int * codeErreur){
-     file_t * file = initFile(pile->taille);
-     if (file){
-          while(!estVideP(pile)){
-               ajouterF(file, depiler(pile));
+     file_t * file = initFile(pile->taille);							// Initialisation d'une file de même taille que la pile
+     if (file){															// Si l'allocation OK :
+          while(!estVideP(pile)){										// Pour chaque élément de la pile
+               ajouterF(file, depiler(pile));							// Ajouter dans la file de l'élément au sommet 
+																		// de la file (élément dépilé de la pile) 
           }
-          afficherF(file);
-          while(!estVideF(file)){
-               empiler(pile,supprimerF(file));
+          afficherF(file);												// Affichage de la file
+          while(!estVideF(file)){										// Taant que la file est NON vide
+               empiler(pile,supprimerF(file));							// Ajout dans la pile de l'élément en tête de la file
+																		// Et suppression de la file
           }
      }
      else{
-          *codeErreur = 1;
+          *codeErreur = 1;												// Affichage code erreur
      }
-     libererF(file);
-     return pile;
+     libererF(file);													// Libération de la file
+     return pile;														// renvoie de la pile
 }
 
 

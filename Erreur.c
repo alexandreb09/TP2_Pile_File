@@ -34,7 +34,7 @@ void AfficheErreur( int codeErreur ){
 		printf("\t- Erreur allocation pile\n\t- Nombre d'élements > taille\n");
 		break;
 	case 2 :
-		printf("\t- L'inversion a échoué");
+		printf("\t- L'inversion a échoué (erreur d'allocation file)");
 		break;
 	default:
 		printf("\t - Une erreur s'est produite\n");
