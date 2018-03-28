@@ -1,0 +1,279 @@
+***********************************************************************
+*	La mise en page a été faite depuis l'éditeur de texte atom		*
+*	Fichier documentaire : principe et rôle des fonctions			*
+*														*
+*	Toutes les cas limites sont gérés en dehors des fonctions des 	*
+*	modules Pile et File									*
+***********************************************************************
+
+
+
+-----------------------------------------------------------------------
+					main
+     Rôle : Tester le fonctionnement des fonctions du
+            module Pile et File en inversant une pile
+     Principe : Génération d'une pile
+                Affichage pile
+                Inversion (confère fonction inversion)
+                Affichage pile inversée
+
+     Entrées : - Taille de la pile
+ 		     - Nombre d'élément dans la pile
+			- Si ces valeurs ne sont pas renseignées:
+			  		la pille est initialisée à :
+                                       taille = 10
+  							    NbElement = 10
+	 Sortie : -
+	 Sous fonctions : Affiche Erreur
+				   genererPile
+				   afficheP
+				   inversion
+				   libererP
+
+	 Dépendance : Pile.h
+  			    File.h
+	  		    Erreur.h
+-----------------------------------------------------------------------
+
+
+***********************************************************************
+*                             PILE                                    *
+***********************************************************************
+-----------------------------------------------------------------------
+                            initPile
+
+     Rôle : Ajouter une valeur au sommet de la pile
+     CONDITION NÉCESSAIRE : -
+
+     Entrée :  taille    : taille de la pile (nombre d'élément max)
+     Sortie : pointeur sur structure pile (confère fichier en-tête)
+                    indice du premier élément = -1
+              NULL si allocation échouée
+
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            estVide
+
+     Rôle : retourner 1 si la pile est vide, 0 sinon
+     CONDITION NÉCESSAIRE : -
+     Entrée :  pile      : pointeur sur structure pile
+
+     Sortie : un entier :
+                    - 1 si la pile est vide
+                    - 0 sinon
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            empiler
+
+     Rôle : Ajouter une valeur au sommet de la pile
+     CONDITION NÉCESSAIRE : il doit y avoir de l'espace libre dans la pile
+
+     Entrée :  pile      : pointeur sur structure pile
+               valeur   	: valeur à ajouter à la pile
+     Sortie : pile avec l'élément ajouté au sommet
+
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            depiler
+
+     Rôle : retourner l'élément au sommet de la pile et le supprimer
+     CONDITION NÉCESSAIRE : la pile doit être NON VIDE
+
+     Entrée : pile      : pointeur sur structure pile
+     Sortie : élément au sommet de la pile
+
+     Variable locales : valSommet (type élément) : valeur au sommet de
+                        la pile
+     Sous fonctions : -
+-----------------------------------------------------------------------
+ -----------------------------------------------------------------------
+                            sommet
+
+     Rôle : retourne l'élément au sommet de la pile
+     CONDITION NÉCESSAIRE : la pile doit être NON VIDE
+
+     Entrée :  pile : pointeur sur structure pile
+     Sortie : valeur au sommet de la pile (type élément)
+
+     Variable locales : -
+     Sous-fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            afficheP
+
+     Rôle : afficher la pile - espace disponible/occupé
+     CONDITION NÉCESSAIRE : -
+     Entrée :  pile : pointeur sur structure pile
+     Sortie : -
+
+     Variable locales : i : indice de parcours des éléments de la pile
+                            (liste contiguë)
+     Sous fonction : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            libererP
+
+     Rôle : libérer l'espace occupé par la structure pile
+     CONDITION NÉCESSAIRE : -
+
+     Entrée :  pile     : pointeur sur structure pile
+     Sortie : -
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            inversion
+
+     Rôle : inverser les éléments d'une pile
+     CONDITION NÉCESSAIRE : -
+     Principe : 1. chaque valeur de la pile est dépilée et ajoutée à la file
+                2. chaque valeur de la file est supprimée et ajoutée à la pile
+
+     Entrée :  pile     : pointeur sur structure pile
+               codeErreur : 1 si erreur
+     Sortie : pile inversée (même pile)
+     Variable locales :
+          - file : structure file dans laquelle on va empiler tous les
+                   élements de la pile
+     Sous fonctions : - initFile
+                      - estVideP
+                      - enfiler
+                      - estVideF
+                      - empiler
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            genererPile
+
+     Rôle : remplir une pile de i éléments allant de 0 à taille-1
+     CONDITION NÉCESSAIRE : taille > nombre d'éléments
+
+     Entrée : - taille  : taille de la pile (nombre d'éléments max)
+              - nbElem  : nombre d'élément
+     Sortie : - pile contenant taille nombre allant de 0 à taille-1 (si
+                allocation réussie)
+              - NULL sinon
+
+     Variable locales : i : indice courant allant de 0 à taille-1
+     Sous fonction : empiler
+                     initPile
+-----------------------------------------------------------------------
+
+
+
+***********************************************************************
+*                             FILE                                    *
+***********************************************************************
+-----------------------------------------------------------------------
+                            initFile
+
+     Fichier : File.c
+     Rôle : initialise la structure file (retourne NULL si échec)
+     CONDITION NÉCESSAIRE : -
+
+     Entrée :  taille : taille de la file (nombre max d'éléments)
+     Sortie : pointeur sur structure file si allocation OK
+              NULL sinon
+
+     Variable locales : f : structure file
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            enfiler
+
+     Fichier : File.c
+     Rôle : insérer un élément dans la file
+     Condition NÉCESSAIRE : la file ne doit pas être pleine
+
+     Entrée : file : pointeur sur structure file
+              val  : valeur à insérer
+     Sortie : pile contenant le nouvel élément
+
+     Variable locales : indice : indice où est inséré l'élément
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            defiler
+
+     Fichier : File.c
+     Rôle : retourner l'élément au sommet de F et le supprime
+     CONDITION NÉCESSAIRE : file non vide
+
+     Entrée :  file     : pointeur sur structure file
+     Sortie : élément au sommet de la file
+              suppression de cet élément dans la file
+
+     Variable locales : -
+     Sous fonctions : sommetF
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            estVideF
+
+     Fichier : File.c
+     Rôle : dire si la file est vide
+     CONDITION NÉCESSAIRE : -
+     Entrée : file   : pointeur sur structure file
+     Sortie : entier : 1 si la file est vide
+                       0 sinon
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            sommetF
+
+     Fichier : File.c
+     Rôle : retourner l'élément au sommet de F
+     CONDITION NÉCESSAIRE : file non vide
+
+     Entrée : file     : pointeur sur structure file
+     Sortie : élément au sommet de la file
+
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            afficherF
+
+     Fichier : file.c
+     Rôle : afficher la structure file
+     CONDITION NÉCESSAIRE :
+
+     Entrée : file     : pointeur sur structure file
+     Sortie : -
+     Variable locales : i : indice de parcours de la file
+     Sous fonctions : -
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+                            libererF
+
+     Fichier : File.c
+     Rôle : libérer l'espace occupé par la structure file
+     CONDITION NÉCESSAIRE : -
+
+     Entrée :  file     : pointeur sur structure file
+     Sortie : -
+     Variable locales : -
+     Sous fonctions : -
+-----------------------------------------------------------------------
+
+
+***********************************************************************
+*                             Erreur                                  *
+***********************************************************************
+-----------------------------------------------------------------------
+                          AfficheErreur
+
+     Fichier : Erreur.c
+     Rôle : Afficher une message d'erreur lorsqu'une erreur se produit
+     CONDITION NÉCESSAIRE : -
+
+     Entrée :  codeErreur : code de l'erreur
+     Sortie : -
+     Variable locales : -
+	Dépendances : -
+-----------------------------------------------------------------------
